@@ -117,11 +117,17 @@ def get_poisson_log_likelihoods(samples, rates):
 
     return: 1d numpy array, where each value represent that log-likelihood value of rates[i]
     """
-    likelihoods = None
+
+    likelihoods = np.array([])
     ###########################################################################
     # TODO: Implement the function.                                           #
     ###########################################################################
-    pass
+    for rate in rates:
+        rate_likelihood = 0
+        for sample in samples:
+            poisson_log_probability = poisson_log_pmf(sample, rate)
+            rate_likelihood += poisson_log_probability
+        likelihoods = np.append(likelihoods, rate_likelihood)
     ###########################################################################
     #                             END OF YOUR CODE                            #
     ###########################################################################
@@ -139,7 +145,7 @@ def possion_iterative_mle(samples, rates):
     ###########################################################################
     # TODO: Implement the function.                                           #
     ###########################################################################
-    pass
+    rate = rates[np.argmax(likelihoods)]
     ###########################################################################
     #                             END OF YOUR CODE                            #
     ###########################################################################
