@@ -1,3 +1,5 @@
+import math
+
 import numpy as np
 
 class conditional_independence():
@@ -102,7 +104,7 @@ def poisson_log_pmf(k, rate):
     ###########################################################################
     # TODO: Implement the function.                                           #
     ###########################################################################
-    pass
+    log_p = k * math.log(rate) - rate - math.log(math.factorial(k))
     ###########################################################################
     #                             END OF YOUR CODE                            #
     ###########################################################################
