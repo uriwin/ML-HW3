@@ -51,7 +51,14 @@ class conditional_independence():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        for x_key, x_value in X.items():
+            for y_key, y_value in Y.items():
+                if X_Y[(x_key, y_key)] is None:
+                    return True
+                if not np.isclose(X_Y[(x_key, y_key)], x_value * y_value):
+                    return True
+
+        return False
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
@@ -69,7 +76,17 @@ class conditional_independence():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        for x_key, x_value in X.items():
+            for y_key, y_value in Y.items():
+                for c_key, c_value in C.items():
+                    y_given_c = Y_C[(y_key,c_key)] / C[c_key]
+                    x_given_c = X_C[(x_key, c_key)] / C[c_key]
+                    x_y_given_c = X_Y_C[(x_key, y_key, c_key)] / C[c_key]
+
+                    if not np.isclose(x_y_given_c, x_given_c * y_given_c):
+                        return False
+
+        return True
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
