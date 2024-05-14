@@ -201,12 +201,20 @@ class NaiveNormalClassDistribution():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
+
         self.dataset = dataset
         self.class_value = class_value
 
+        self.features_stds_means = {}
+        instances_of_class = dataset[dataset[:, -1] == class_value]
+        for feature_index in range(instances_of_class.shape[1] - 1):
+            feature = instances_of_class[:, feature_index]
+            miu = (1 / len(instances_of_class)) * np.sum(feature)
+            std_square = (1 / len(instances_of_class)) * np.sum((feature - miu) ** 2)
+            self.features_stds_means[feature_index] = {}
+            self.features_stds_means[feature_index]["miu"] = miu
+            self.features_stds_means[feature_index]["sigma"] = np.sqrt(std_square)
 
-        self.mean = 0 # need to find
-        self.std = 0 # need to find
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
@@ -219,7 +227,7 @@ class NaiveNormalClassDistribution():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        label_column = self.dataset[,:1]
+        label_column = self.dataset[:,1]
         prior = np.sum(np.where(label_column == self.class_value, 1, 0)) / len(label_column)
         ###########################################################################
         #                             END OF YOUR CODE                            #
