@@ -238,11 +238,14 @@ class NaiveNormalClassDistribution():
         """
         Returns the likelihhod porbability of the instance under the class according to the dataset distribution.
         """
-        likelihood = None
+        likelihood = 1.0
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        likelihood = normal_pdf(x, self.mean, self.std)
+        for index_of_feature, feature_value in enumerate(x):
+            miu = self.features_stds_means[index_of_feature]["miu"]
+            sigma = self.features_stds_means[index_of_feature]["sigma"]
+            likelihood = likelihood * normal_pdf(feature_value, miu, sigma)
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
