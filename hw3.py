@@ -356,7 +356,7 @@ def compute_accuracy(test_set, map_classifier):
 
 def multi_normal_pdf(x, mean, cov):
     """
-    Calculate multi variable normal desnity function for a given x, mean and covarince matrix.
+    Calculate multi variable normal density function for a given x, mean and covariance matrix.
  
     Input:
     - x: A value we want to compute the distribution for.
@@ -369,7 +369,12 @@ def multi_normal_pdf(x, mean, cov):
     ###########################################################################
     # TODO: Implement the function.                                           #
     ###########################################################################
-    pass
+    d = len(x)
+    det_sigma = np.linalg.det(cov)
+    right_part_of_formula = (math.e ** ((-0.5) * np.transpose(x - mean) * np.linalg.inv(cov) * (x - mean)))
+    left_part_of_the_formula = (2 * math.pi) ** ((-d) / 2) * (det_sigma ** -0.5)
+
+    pdf = left_part_of_the_formula * right_part_of_formula
     ###########################################################################
     #                             END OF YOUR CODE                            #
     ###########################################################################
