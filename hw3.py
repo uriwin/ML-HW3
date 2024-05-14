@@ -251,6 +251,8 @@ class NaiveNormalClassDistribution():
         # TODO: Implement the function.                                           #
         ###########################################################################
         for index_of_feature, feature_value in enumerate(x):
+            if index_of_feature >= len(self.features_stds_means.keys()):
+                break
             miu = self.features_stds_means[index_of_feature]["miu"]
             sigma = self.features_stds_means[index_of_feature]["sigma"]
             likelihood = likelihood * normal_pdf(feature_value, miu, sigma)
