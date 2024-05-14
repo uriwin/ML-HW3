@@ -285,9 +285,9 @@ class MAPClassifier():
         for the given instance.
     
         Input
-            - ccd0 : An object contating the relevant parameters and methods 
+            - ccd0 : An object containing the relevant parameters and methods
                      for the distribution of class 0.
-            - ccd1 : An object contating the relevant parameters and methods 
+            - ccd1 : An object containing the relevant parameters and methods
                      for the distribution of class 1.
         """
         ###########################################################################
@@ -340,7 +340,12 @@ def compute_accuracy(test_set, map_classifier):
     ###########################################################################
     # TODO: Implement the function.                                           #
     ###########################################################################
-    pass
+    correctly_classified = 0
+
+    for instance in test_set:
+        if map_classifier.predict(instance) == instance[-1]:
+            correctly_classified += 1
+    acc = correctly_classified / len(test_set)
     ###########################################################################
     #                             END OF YOUR CODE                            #
     ###########################################################################
