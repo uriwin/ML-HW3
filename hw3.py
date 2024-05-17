@@ -216,13 +216,12 @@ class NaiveNormalClassDistribution():
         instances_of_class = dataset[dataset[:, -1] == class_value]
         for feature_index in range(instances_of_class.shape[1] - 1):
             feature = instances_of_class[:, feature_index]
-            miu = (1 / len(instances_of_class)) * np.sum(feature)
+            miu = (1 / len(feature)) * np.sum(feature)
             std_square = (1 / len(instances_of_class)) * np.sum((feature - miu) ** 2)
             self.features_stds_means[feature_index] = {}
             self.features_stds_means[feature_index]["miu"] = miu
             self.features_stds_means[feature_index]["sigma"] = np.sqrt(std_square)
 
-        print(self.features_stds_means)
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
@@ -395,7 +394,14 @@ class MultiNormalClassDistribution():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        self.dataset = dataset
+        self.class_value = class_value
+
+        dataset_without_label_column = dataset[:, :-1]
+
+        self.mean = np.mean(dataset_without_label_column, axis=0)
+        self.cov_matrix = np.cov(dataset_without_label_column)
+
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
@@ -408,7 +414,8 @@ class MultiNormalClassDistribution():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        label_column = self.dataset[:, 1]
+        prior = np.sum(np.where(label_column == self.class_value, 1, 0)) / len(label_column)
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
@@ -422,7 +429,8 @@ class MultiNormalClassDistribution():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        instance_without_label = x[:-1]
+        likelihood = multi_normal_pdf(instance_without_label, self.mean, self.cov_matrix)
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
@@ -437,7 +445,7 @@ class MultiNormalClassDistribution():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        pass
+        posterior = self.get_prior() * self.get_instance_likelihood(x)
         ###########################################################################
         #                             END OF YOUR CODE                            #
         ###########################################################################
