@@ -370,10 +370,13 @@ def multi_normal_pdf(x, mean, cov):
     ###########################################################################
     d = len(x)
     det_sigma = np.linalg.det(cov)
-    right_part_of_formula = (math.e ** ((-0.5) * np.transpose(x - mean) * np.linalg.inv(cov) * (x - mean)))
+
+    exp = (-0.5) * np.dot(np.transpose(x - mean), np.dot(np.linalg.inv(cov), (x - mean)))
+    right_part_of_formula = (math.e ** exp)
     left_part_of_the_formula = (2 * math.pi) ** ((-d) / 2) * (det_sigma ** -0.5)
 
     pdf = left_part_of_the_formula * right_part_of_formula
+
     ###########################################################################
     #                             END OF YOUR CODE                            #
     ###########################################################################
@@ -394,13 +397,12 @@ class MultiNormalClassDistribution():
         ###########################################################################
         # TODO: Implement the function.                                           #
         ###########################################################################
-        self.dataset = dataset
+        self.dataset = np.copy(dataset)
         self.class_value = class_value
 
         dataset_without_label_column = dataset[:, :-1]
-
         self.mean = np.mean(dataset_without_label_column, axis=0)
-        self.cov_matrix = np.cov(dataset_without_label_column)
+        self.cov_matrix = np.cov(dataset_without_label_column, rowvar=False)
 
         ###########################################################################
         #                             END OF YOUR CODE                            #
